@@ -1,0 +1,1537 @@
+State 119 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: ROOT $end
+
+    1 ROOT: Statement END_OF_FILE
+
+    2 Statement: SimpleStatement Statement
+    3          | CompoundStatement Statement
+    4          | %empty
+
+    5 SimpleStatement: SmallStatement NL
+
+    6 SmallStatement: Expression
+    7               | FlowSt
+    8               | display
+
+    9 Expression: AssignmentExpression
+
+   10 AssignmentExpression: id opassgnleft Expr1main
+   11                     | Expr1main opassgnright id
+
+   12 id: ID
+
+   13 num: NUM
+
+   14 Expr1main: Expr1
+   15          | STRING
+   16          | VECTOR
+
+   17 Expr1: Expr2
+
+   18 Expr2: Expr3
+   19      | Expr2 oppm Expr3
+
+   20 Expr3: Expr4
+   21      | Expr3 opmd Expr4
+
+   22 Expr4: id
+   23      | num
+   24      | '(' Expr1 ')'
+
+   25 opassgnleft: '='
+   26            | LA
+   27            | LLA
+
+   28 opassgnright: RA
+   29             | RRA
+
+   30 oppm: '+'
+   31     | '-'
+
+   32 opmd: '*'
+   33     | '/'
+
+   34 FlowSt: BREAK NL
+   35       | NEXT NL
+
+   36 display: PRINT '(' printitems ')'
+
+   37 printitems: Expr1
+   38           | VECTOR
+   39           | STRING
+   40           | %empty
+
+   41 CompoundStatement: if_loop NL
+   42                  | while_loop NL
+   43                  | for_loop NL
+   44                  | repeat_loop NL
+
+   45 if_loop: LOOP_IF '(' condition ')' NL '{' suite '}'
+   46        | LOOP_IF '(' condition ')' NL '{' suite '}' elseif_loop
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition ')' '{' suite '}' elseif_loop
+   48            | else_loop
+
+   49 else_loop: LOOP_ELSE '{' suite '}'
+   50          | %empty
+
+   51 while_loop: LOOP_WHILE '(' condition ')' NL '{' suite '}'
+
+   52 for_loop: LOOP_FOR '(' cdn ')' NL '{' suite '}'
+
+   53 cdn: id IN sequence
+
+   54 repeat_loop: LOOP_REPEAT '{' suite '}'
+
+   55 suite: NL Statement
+
+   56 condition: condition '|' subcond1
+   57          | subcond1
+
+   58 subcond1: subcond1 '&' subcond2
+   59         | subcond2
+
+   60 subcond2: RelationalExpression
+
+   61 RelationalExpression: id
+   62                     | NUM
+   63                     | RelationalExpression OPREL Expr1
+
+   64 sequence: SEQ '(' startendind ')'
+   65         | id
+
+   66 startendind: jumpsize id
+   67            | num ',' num
+   68            | num ':' num
+
+   69 jumpsize: num ',' num ',' FROM '=' num
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'&' (38) 58
+'(' (40) 24 36 45 46 47 51 52 64
+')' (41) 24 36 45 46 47 51 52 64
+'*' (42) 32
+'+' (43) 30
+',' (44) 67 69
+'-' (45) 31
+'/' (47) 33
+':' (58) 68
+'=' (61) 25 69
+'{' (123) 45 46 47 49 51 52 54
+'|' (124) 56
+'}' (125) 45 46 47 49 51 52 54
+error (256)
+STRING (258) 15 39
+ID (259) 12
+NUM (260) 13 62
+VECTOR (261) 16 38
+LOOP_WHILE (262) 51
+LOOP_FOR (263) 52
+LOOP_IF (264) 45 46 47
+LOOP_ELSE (265) 47 49
+LOOP_REPEAT (266) 54
+IN (267) 53
+SEQ (268) 64
+FROM (269) 69
+BREAK (270) 34
+NEXT (271) 35
+PRINT (272) 36
+LLA (273) 27
+LA (274) 26
+RA (275) 28
+RRA (276) 29
+OPREL (277) 63
+NL (278) 5 34 35 41 42 43 44 45 46 51 52 55
+END_OF_FILE (279) 1
+
+
+Nonterminals, with rules where they appear
+
+$accept (38)
+    on left: 0
+ROOT (39)
+    on left: 1, on right: 0
+Statement (40)
+    on left: 2 3 4, on right: 1 2 3 55
+SimpleStatement (41)
+    on left: 5, on right: 2
+SmallStatement (42)
+    on left: 6 7 8, on right: 5
+Expression (43)
+    on left: 9, on right: 6
+AssignmentExpression (44)
+    on left: 10 11, on right: 9
+id (45)
+    on left: 12, on right: 10 11 22 53 61 65 66
+num (46)
+    on left: 13, on right: 23 67 68 69
+Expr1main (47)
+    on left: 14 15 16, on right: 10 11
+Expr1 (48)
+    on left: 17, on right: 14 24 37 63
+Expr2 (49)
+    on left: 18 19, on right: 17 19
+Expr3 (50)
+    on left: 20 21, on right: 18 19 21
+Expr4 (51)
+    on left: 22 23 24, on right: 20 21
+opassgnleft (52)
+    on left: 25 26 27, on right: 10
+opassgnright (53)
+    on left: 28 29, on right: 11
+oppm (54)
+    on left: 30 31, on right: 19
+opmd (55)
+    on left: 32 33, on right: 21
+FlowSt (56)
+    on left: 34 35, on right: 7
+display (57)
+    on left: 36, on right: 8
+printitems (58)
+    on left: 37 38 39 40, on right: 36
+CompoundStatement (59)
+    on left: 41 42 43 44, on right: 3
+if_loop (60)
+    on left: 45 46, on right: 41
+elseif_loop (61)
+    on left: 47 48, on right: 46 47
+else_loop (62)
+    on left: 49 50, on right: 48
+while_loop (63)
+    on left: 51, on right: 42
+for_loop (64)
+    on left: 52, on right: 43
+cdn (65)
+    on left: 53, on right: 52
+repeat_loop (66)
+    on left: 54, on right: 44
+suite (67)
+    on left: 55, on right: 45 46 47 49 51 52 54
+condition (68)
+    on left: 56 57, on right: 45 46 47 51 56
+subcond1 (69)
+    on left: 58 59, on right: 56 57 58
+subcond2 (70)
+    on left: 60, on right: 58 59
+RelationalExpression (71)
+    on left: 61 62 63, on right: 60 63
+sequence (72)
+    on left: 64 65, on right: 53
+startendind (73)
+    on left: 66 67 68, on right: 64
+jumpsize (74)
+    on left: 69, on right: 66
+
+
+State 0
+
+    0 $accept: . ROOT $end
+
+    STRING       shift, and go to state 1
+    ID           shift, and go to state 2
+    NUM          shift, and go to state 3
+    VECTOR       shift, and go to state 4
+    LOOP_WHILE   shift, and go to state 5
+    LOOP_FOR     shift, and go to state 6
+    LOOP_IF      shift, and go to state 7
+    LOOP_REPEAT  shift, and go to state 8
+    BREAK        shift, and go to state 9
+    NEXT         shift, and go to state 10
+    PRINT        shift, and go to state 11
+    '('          shift, and go to state 12
+
+    $default  reduce using rule 4 (Statement)
+
+    ROOT                  go to state 13
+    Statement             go to state 14
+    SimpleStatement       go to state 15
+    SmallStatement        go to state 16
+    Expression            go to state 17
+    AssignmentExpression  go to state 18
+    id                    go to state 19
+    num                   go to state 20
+    Expr1main             go to state 21
+    Expr1                 go to state 22
+    Expr2                 go to state 23
+    Expr3                 go to state 24
+    Expr4                 go to state 25
+    FlowSt                go to state 26
+    display               go to state 27
+    CompoundStatement     go to state 28
+    if_loop               go to state 29
+    while_loop            go to state 30
+    for_loop              go to state 31
+    repeat_loop           go to state 32
+
+
+State 1
+
+   15 Expr1main: STRING .
+
+    $default  reduce using rule 15 (Expr1main)
+
+
+State 2
+
+   12 id: ID .
+
+    $default  reduce using rule 12 (id)
+
+
+State 3
+
+   13 num: NUM .
+
+    $default  reduce using rule 13 (num)
+
+
+State 4
+
+   16 Expr1main: VECTOR .
+
+    $default  reduce using rule 16 (Expr1main)
+
+
+State 5
+
+   51 while_loop: LOOP_WHILE . '(' condition ')' NL '{' suite '}'
+
+    '('  shift, and go to state 33
+
+
+State 6
+
+   52 for_loop: LOOP_FOR . '(' cdn ')' NL '{' suite '}'
+
+    '('  shift, and go to state 34
+
+
+State 7
+
+   45 if_loop: LOOP_IF . '(' condition ')' NL '{' suite '}'
+   46        | LOOP_IF . '(' condition ')' NL '{' suite '}' elseif_loop
+
+    '('  shift, and go to state 35
+
+
+State 8
+
+   54 repeat_loop: LOOP_REPEAT . '{' suite '}'
+
+    '{'  shift, and go to state 36
+
+
+State 9
+
+   34 FlowSt: BREAK . NL
+
+    NL  shift, and go to state 37
+
+
+State 10
+
+   35 FlowSt: NEXT . NL
+
+    NL  shift, and go to state 38
+
+
+State 11
+
+   36 display: PRINT . '(' printitems ')'
+
+    '('  shift, and go to state 39
+
+
+State 12
+
+   24 Expr4: '(' . Expr1 ')'
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 3
+    '('  shift, and go to state 12
+
+    id     go to state 40
+    num    go to state 20
+    Expr1  go to state 41
+    Expr2  go to state 23
+    Expr3  go to state 24
+    Expr4  go to state 25
+
+
+State 13
+
+    0 $accept: ROOT . $end
+
+    $end  shift, and go to state 42
+
+
+State 14
+
+    1 ROOT: Statement . END_OF_FILE
+
+    END_OF_FILE  shift, and go to state 43
+
+
+State 15
+
+    2 Statement: SimpleStatement . Statement
+
+    STRING       shift, and go to state 1
+    ID           shift, and go to state 2
+    NUM          shift, and go to state 3
+    VECTOR       shift, and go to state 4
+    LOOP_WHILE   shift, and go to state 5
+    LOOP_FOR     shift, and go to state 6
+    LOOP_IF      shift, and go to state 7
+    LOOP_REPEAT  shift, and go to state 8
+    BREAK        shift, and go to state 9
+    NEXT         shift, and go to state 10
+    PRINT        shift, and go to state 11
+    '('          shift, and go to state 12
+
+    $default  reduce using rule 4 (Statement)
+
+    Statement             go to state 44
+    SimpleStatement       go to state 15
+    SmallStatement        go to state 16
+    Expression            go to state 17
+    AssignmentExpression  go to state 18
+    id                    go to state 19
+    num                   go to state 20
+    Expr1main             go to state 21
+    Expr1                 go to state 22
+    Expr2                 go to state 23
+    Expr3                 go to state 24
+    Expr4                 go to state 25
+    FlowSt                go to state 26
+    display               go to state 27
+    CompoundStatement     go to state 28
+    if_loop               go to state 29
+    while_loop            go to state 30
+    for_loop              go to state 31
+    repeat_loop           go to state 32
+
+
+State 16
+
+    5 SimpleStatement: SmallStatement . NL
+
+    NL  shift, and go to state 45
+
+
+State 17
+
+    6 SmallStatement: Expression .
+
+    $default  reduce using rule 6 (SmallStatement)
+
+
+State 18
+
+    9 Expression: AssignmentExpression .
+
+    $default  reduce using rule 9 (Expression)
+
+
+State 19
+
+   10 AssignmentExpression: id . opassgnleft Expr1main
+   22 Expr4: id .
+
+    LLA  shift, and go to state 46
+    LA   shift, and go to state 47
+    '='  shift, and go to state 48
+
+    $default  reduce using rule 22 (Expr4)
+
+    opassgnleft  go to state 49
+
+
+State 20
+
+   23 Expr4: num .
+
+    $default  reduce using rule 23 (Expr4)
+
+
+State 21
+
+   11 AssignmentExpression: Expr1main . opassgnright id
+
+    RA   shift, and go to state 50
+    RRA  shift, and go to state 51
+
+    opassgnright  go to state 52
+
+
+State 22
+
+   14 Expr1main: Expr1 .
+
+    $default  reduce using rule 14 (Expr1main)
+
+
+State 23
+
+   17 Expr1: Expr2 .
+   19 Expr2: Expr2 . oppm Expr3
+
+    '+'  shift, and go to state 53
+    '-'  shift, and go to state 54
+
+    $default  reduce using rule 17 (Expr1)
+
+    oppm  go to state 55
+
+
+State 24
+
+   18 Expr2: Expr3 .
+   21 Expr3: Expr3 . opmd Expr4
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    $default  reduce using rule 18 (Expr2)
+
+    opmd  go to state 58
+
+
+State 25
+
+   20 Expr3: Expr4 .
+
+    $default  reduce using rule 20 (Expr3)
+
+
+State 26
+
+    7 SmallStatement: FlowSt .
+
+    $default  reduce using rule 7 (SmallStatement)
+
+
+State 27
+
+    8 SmallStatement: display .
+
+    $default  reduce using rule 8 (SmallStatement)
+
+
+State 28
+
+    3 Statement: CompoundStatement . Statement
+
+    STRING       shift, and go to state 1
+    ID           shift, and go to state 2
+    NUM          shift, and go to state 3
+    VECTOR       shift, and go to state 4
+    LOOP_WHILE   shift, and go to state 5
+    LOOP_FOR     shift, and go to state 6
+    LOOP_IF      shift, and go to state 7
+    LOOP_REPEAT  shift, and go to state 8
+    BREAK        shift, and go to state 9
+    NEXT         shift, and go to state 10
+    PRINT        shift, and go to state 11
+    '('          shift, and go to state 12
+
+    $default  reduce using rule 4 (Statement)
+
+    Statement             go to state 59
+    SimpleStatement       go to state 15
+    SmallStatement        go to state 16
+    Expression            go to state 17
+    AssignmentExpression  go to state 18
+    id                    go to state 19
+    num                   go to state 20
+    Expr1main             go to state 21
+    Expr1                 go to state 22
+    Expr2                 go to state 23
+    Expr3                 go to state 24
+    Expr4                 go to state 25
+    FlowSt                go to state 26
+    display               go to state 27
+    CompoundStatement     go to state 28
+    if_loop               go to state 29
+    while_loop            go to state 30
+    for_loop              go to state 31
+    repeat_loop           go to state 32
+
+
+State 29
+
+   41 CompoundStatement: if_loop . NL
+
+    NL  shift, and go to state 60
+
+
+State 30
+
+   42 CompoundStatement: while_loop . NL
+
+    NL  shift, and go to state 61
+
+
+State 31
+
+   43 CompoundStatement: for_loop . NL
+
+    NL  shift, and go to state 62
+
+
+State 32
+
+   44 CompoundStatement: repeat_loop . NL
+
+    NL  shift, and go to state 63
+
+
+State 33
+
+   51 while_loop: LOOP_WHILE '(' . condition ')' NL '{' suite '}'
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 64
+
+    id                    go to state 65
+    condition             go to state 66
+    subcond1              go to state 67
+    subcond2              go to state 68
+    RelationalExpression  go to state 69
+
+
+State 34
+
+   52 for_loop: LOOP_FOR '(' . cdn ')' NL '{' suite '}'
+
+    ID  shift, and go to state 2
+
+    id   go to state 70
+    cdn  go to state 71
+
+
+State 35
+
+   45 if_loop: LOOP_IF '(' . condition ')' NL '{' suite '}'
+   46        | LOOP_IF '(' . condition ')' NL '{' suite '}' elseif_loop
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 64
+
+    id                    go to state 65
+    condition             go to state 72
+    subcond1              go to state 67
+    subcond2              go to state 68
+    RelationalExpression  go to state 69
+
+
+State 36
+
+   54 repeat_loop: LOOP_REPEAT '{' . suite '}'
+
+    NL  shift, and go to state 73
+
+    suite  go to state 74
+
+
+State 37
+
+   34 FlowSt: BREAK NL .
+
+    $default  reduce using rule 34 (FlowSt)
+
+
+State 38
+
+   35 FlowSt: NEXT NL .
+
+    $default  reduce using rule 35 (FlowSt)
+
+
+State 39
+
+   36 display: PRINT '(' . printitems ')'
+
+    STRING  shift, and go to state 75
+    ID      shift, and go to state 2
+    NUM     shift, and go to state 3
+    VECTOR  shift, and go to state 76
+    '('     shift, and go to state 12
+
+    $default  reduce using rule 40 (printitems)
+
+    id          go to state 40
+    num         go to state 20
+    Expr1       go to state 77
+    Expr2       go to state 23
+    Expr3       go to state 24
+    Expr4       go to state 25
+    printitems  go to state 78
+
+
+State 40
+
+   22 Expr4: id .
+
+    $default  reduce using rule 22 (Expr4)
+
+
+State 41
+
+   24 Expr4: '(' Expr1 . ')'
+
+    ')'  shift, and go to state 79
+
+
+State 42
+
+    0 $accept: ROOT $end .
+
+    $default  accept
+
+
+State 43
+
+    1 ROOT: Statement END_OF_FILE .
+
+    $default  reduce using rule 1 (ROOT)
+
+
+State 44
+
+    2 Statement: SimpleStatement Statement .
+
+    $default  reduce using rule 2 (Statement)
+
+
+State 45
+
+    5 SimpleStatement: SmallStatement NL .
+
+    $default  reduce using rule 5 (SimpleStatement)
+
+
+State 46
+
+   27 opassgnleft: LLA .
+
+    $default  reduce using rule 27 (opassgnleft)
+
+
+State 47
+
+   26 opassgnleft: LA .
+
+    $default  reduce using rule 26 (opassgnleft)
+
+
+State 48
+
+   25 opassgnleft: '=' .
+
+    $default  reduce using rule 25 (opassgnleft)
+
+
+State 49
+
+   10 AssignmentExpression: id opassgnleft . Expr1main
+
+    STRING  shift, and go to state 1
+    ID      shift, and go to state 2
+    NUM     shift, and go to state 3
+    VECTOR  shift, and go to state 4
+    '('     shift, and go to state 12
+
+    id         go to state 40
+    num        go to state 20
+    Expr1main  go to state 80
+    Expr1      go to state 22
+    Expr2      go to state 23
+    Expr3      go to state 24
+    Expr4      go to state 25
+
+
+State 50
+
+   28 opassgnright: RA .
+
+    $default  reduce using rule 28 (opassgnright)
+
+
+State 51
+
+   29 opassgnright: RRA .
+
+    $default  reduce using rule 29 (opassgnright)
+
+
+State 52
+
+   11 AssignmentExpression: Expr1main opassgnright . id
+
+    ID  shift, and go to state 2
+
+    id  go to state 81
+
+
+State 53
+
+   30 oppm: '+' .
+
+    $default  reduce using rule 30 (oppm)
+
+
+State 54
+
+   31 oppm: '-' .
+
+    $default  reduce using rule 31 (oppm)
+
+
+State 55
+
+   19 Expr2: Expr2 oppm . Expr3
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 3
+    '('  shift, and go to state 12
+
+    id     go to state 40
+    num    go to state 20
+    Expr3  go to state 82
+    Expr4  go to state 25
+
+
+State 56
+
+   32 opmd: '*' .
+
+    $default  reduce using rule 32 (opmd)
+
+
+State 57
+
+   33 opmd: '/' .
+
+    $default  reduce using rule 33 (opmd)
+
+
+State 58
+
+   21 Expr3: Expr3 opmd . Expr4
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 3
+    '('  shift, and go to state 12
+
+    id     go to state 40
+    num    go to state 20
+    Expr4  go to state 83
+
+
+State 59
+
+    3 Statement: CompoundStatement Statement .
+
+    $default  reduce using rule 3 (Statement)
+
+
+State 60
+
+   41 CompoundStatement: if_loop NL .
+
+    $default  reduce using rule 41 (CompoundStatement)
+
+
+State 61
+
+   42 CompoundStatement: while_loop NL .
+
+    $default  reduce using rule 42 (CompoundStatement)
+
+
+State 62
+
+   43 CompoundStatement: for_loop NL .
+
+    $default  reduce using rule 43 (CompoundStatement)
+
+
+State 63
+
+   44 CompoundStatement: repeat_loop NL .
+
+    $default  reduce using rule 44 (CompoundStatement)
+
+
+State 64
+
+   62 RelationalExpression: NUM .
+
+    $default  reduce using rule 62 (RelationalExpression)
+
+
+State 65
+
+   61 RelationalExpression: id .
+
+    $default  reduce using rule 61 (RelationalExpression)
+
+
+State 66
+
+   51 while_loop: LOOP_WHILE '(' condition . ')' NL '{' suite '}'
+   56 condition: condition . '|' subcond1
+
+    ')'  shift, and go to state 84
+    '|'  shift, and go to state 85
+
+
+State 67
+
+   57 condition: subcond1 .
+   58 subcond1: subcond1 . '&' subcond2
+
+    '&'  shift, and go to state 86
+
+    $default  reduce using rule 57 (condition)
+
+
+State 68
+
+   59 subcond1: subcond2 .
+
+    $default  reduce using rule 59 (subcond1)
+
+
+State 69
+
+   60 subcond2: RelationalExpression .
+   63 RelationalExpression: RelationalExpression . OPREL Expr1
+
+    OPREL  shift, and go to state 87
+
+    $default  reduce using rule 60 (subcond2)
+
+
+State 70
+
+   53 cdn: id . IN sequence
+
+    IN  shift, and go to state 88
+
+
+State 71
+
+   52 for_loop: LOOP_FOR '(' cdn . ')' NL '{' suite '}'
+
+    ')'  shift, and go to state 89
+
+
+State 72
+
+   45 if_loop: LOOP_IF '(' condition . ')' NL '{' suite '}'
+   46        | LOOP_IF '(' condition . ')' NL '{' suite '}' elseif_loop
+   56 condition: condition . '|' subcond1
+
+    ')'  shift, and go to state 90
+    '|'  shift, and go to state 85
+
+
+State 73
+
+   55 suite: NL . Statement
+
+    STRING       shift, and go to state 1
+    ID           shift, and go to state 2
+    NUM          shift, and go to state 3
+    VECTOR       shift, and go to state 4
+    LOOP_WHILE   shift, and go to state 5
+    LOOP_FOR     shift, and go to state 6
+    LOOP_IF      shift, and go to state 7
+    LOOP_REPEAT  shift, and go to state 8
+    BREAK        shift, and go to state 9
+    NEXT         shift, and go to state 10
+    PRINT        shift, and go to state 11
+    '('          shift, and go to state 12
+
+    $default  reduce using rule 4 (Statement)
+
+    Statement             go to state 91
+    SimpleStatement       go to state 15
+    SmallStatement        go to state 16
+    Expression            go to state 17
+    AssignmentExpression  go to state 18
+    id                    go to state 19
+    num                   go to state 20
+    Expr1main             go to state 21
+    Expr1                 go to state 22
+    Expr2                 go to state 23
+    Expr3                 go to state 24
+    Expr4                 go to state 25
+    FlowSt                go to state 26
+    display               go to state 27
+    CompoundStatement     go to state 28
+    if_loop               go to state 29
+    while_loop            go to state 30
+    for_loop              go to state 31
+    repeat_loop           go to state 32
+
+
+State 74
+
+   54 repeat_loop: LOOP_REPEAT '{' suite . '}'
+
+    '}'  shift, and go to state 92
+
+
+State 75
+
+   39 printitems: STRING .
+
+    $default  reduce using rule 39 (printitems)
+
+
+State 76
+
+   38 printitems: VECTOR .
+
+    $default  reduce using rule 38 (printitems)
+
+
+State 77
+
+   37 printitems: Expr1 .
+
+    $default  reduce using rule 37 (printitems)
+
+
+State 78
+
+   36 display: PRINT '(' printitems . ')'
+
+    ')'  shift, and go to state 93
+
+
+State 79
+
+   24 Expr4: '(' Expr1 ')' .
+
+    $default  reduce using rule 24 (Expr4)
+
+
+State 80
+
+   10 AssignmentExpression: id opassgnleft Expr1main .
+
+    $default  reduce using rule 10 (AssignmentExpression)
+
+
+State 81
+
+   11 AssignmentExpression: Expr1main opassgnright id .
+
+    $default  reduce using rule 11 (AssignmentExpression)
+
+
+State 82
+
+   19 Expr2: Expr2 oppm Expr3 .
+   21 Expr3: Expr3 . opmd Expr4
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    $default  reduce using rule 19 (Expr2)
+
+    opmd  go to state 58
+
+
+State 83
+
+   21 Expr3: Expr3 opmd Expr4 .
+
+    $default  reduce using rule 21 (Expr3)
+
+
+State 84
+
+   51 while_loop: LOOP_WHILE '(' condition ')' . NL '{' suite '}'
+
+    NL  shift, and go to state 94
+
+
+State 85
+
+   56 condition: condition '|' . subcond1
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 64
+
+    id                    go to state 65
+    subcond1              go to state 95
+    subcond2              go to state 68
+    RelationalExpression  go to state 69
+
+
+State 86
+
+   58 subcond1: subcond1 '&' . subcond2
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 64
+
+    id                    go to state 65
+    subcond2              go to state 96
+    RelationalExpression  go to state 69
+
+
+State 87
+
+   63 RelationalExpression: RelationalExpression OPREL . Expr1
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 3
+    '('  shift, and go to state 12
+
+    id     go to state 40
+    num    go to state 20
+    Expr1  go to state 97
+    Expr2  go to state 23
+    Expr3  go to state 24
+    Expr4  go to state 25
+
+
+State 88
+
+   53 cdn: id IN . sequence
+
+    ID   shift, and go to state 2
+    SEQ  shift, and go to state 98
+
+    id        go to state 99
+    sequence  go to state 100
+
+
+State 89
+
+   52 for_loop: LOOP_FOR '(' cdn ')' . NL '{' suite '}'
+
+    NL  shift, and go to state 101
+
+
+State 90
+
+   45 if_loop: LOOP_IF '(' condition ')' . NL '{' suite '}'
+   46        | LOOP_IF '(' condition ')' . NL '{' suite '}' elseif_loop
+
+    NL  shift, and go to state 102
+
+
+State 91
+
+   55 suite: NL Statement .
+
+    $default  reduce using rule 55 (suite)
+
+
+State 92
+
+   54 repeat_loop: LOOP_REPEAT '{' suite '}' .
+
+    $default  reduce using rule 54 (repeat_loop)
+
+
+State 93
+
+   36 display: PRINT '(' printitems ')' .
+
+    $default  reduce using rule 36 (display)
+
+
+State 94
+
+   51 while_loop: LOOP_WHILE '(' condition ')' NL . '{' suite '}'
+
+    '{'  shift, and go to state 103
+
+
+State 95
+
+   56 condition: condition '|' subcond1 .
+   58 subcond1: subcond1 . '&' subcond2
+
+    '&'  shift, and go to state 86
+
+    $default  reduce using rule 56 (condition)
+
+
+State 96
+
+   58 subcond1: subcond1 '&' subcond2 .
+
+    $default  reduce using rule 58 (subcond1)
+
+
+State 97
+
+   63 RelationalExpression: RelationalExpression OPREL Expr1 .
+
+    $default  reduce using rule 63 (RelationalExpression)
+
+
+State 98
+
+   64 sequence: SEQ . '(' startendind ')'
+
+    '('  shift, and go to state 104
+
+
+State 99
+
+   65 sequence: id .
+
+    $default  reduce using rule 65 (sequence)
+
+
+State 100
+
+   53 cdn: id IN sequence .
+
+    $default  reduce using rule 53 (cdn)
+
+
+State 101
+
+   52 for_loop: LOOP_FOR '(' cdn ')' NL . '{' suite '}'
+
+    '{'  shift, and go to state 105
+
+
+State 102
+
+   45 if_loop: LOOP_IF '(' condition ')' NL . '{' suite '}'
+   46        | LOOP_IF '(' condition ')' NL . '{' suite '}' elseif_loop
+
+    '{'  shift, and go to state 106
+
+
+State 103
+
+   51 while_loop: LOOP_WHILE '(' condition ')' NL '{' . suite '}'
+
+    NL  shift, and go to state 73
+
+    suite  go to state 107
+
+
+State 104
+
+   64 sequence: SEQ '(' . startendind ')'
+
+    NUM  shift, and go to state 3
+
+    num          go to state 108
+    startendind  go to state 109
+    jumpsize     go to state 110
+
+
+State 105
+
+   52 for_loop: LOOP_FOR '(' cdn ')' NL '{' . suite '}'
+
+    NL  shift, and go to state 73
+
+    suite  go to state 111
+
+
+State 106
+
+   45 if_loop: LOOP_IF '(' condition ')' NL '{' . suite '}'
+   46        | LOOP_IF '(' condition ')' NL '{' . suite '}' elseif_loop
+
+    NL  shift, and go to state 73
+
+    suite  go to state 112
+
+
+State 107
+
+   51 while_loop: LOOP_WHILE '(' condition ')' NL '{' suite . '}'
+
+    '}'  shift, and go to state 113
+
+
+State 108
+
+   67 startendind: num . ',' num
+   68            | num . ':' num
+   69 jumpsize: num . ',' num ',' FROM '=' num
+
+    ','  shift, and go to state 114
+    ':'  shift, and go to state 115
+
+
+State 109
+
+   64 sequence: SEQ '(' startendind . ')'
+
+    ')'  shift, and go to state 116
+
+
+State 110
+
+   66 startendind: jumpsize . id
+
+    ID  shift, and go to state 2
+
+    id  go to state 117
+
+
+State 111
+
+   52 for_loop: LOOP_FOR '(' cdn ')' NL '{' suite . '}'
+
+    '}'  shift, and go to state 118
+
+
+State 112
+
+   45 if_loop: LOOP_IF '(' condition ')' NL '{' suite . '}'
+   46        | LOOP_IF '(' condition ')' NL '{' suite . '}' elseif_loop
+
+    '}'  shift, and go to state 119
+
+
+State 113
+
+   51 while_loop: LOOP_WHILE '(' condition ')' NL '{' suite '}' .
+
+    $default  reduce using rule 51 (while_loop)
+
+
+State 114
+
+   67 startendind: num ',' . num
+   69 jumpsize: num ',' . num ',' FROM '=' num
+
+    NUM  shift, and go to state 3
+
+    num  go to state 120
+
+
+State 115
+
+   68 startendind: num ':' . num
+
+    NUM  shift, and go to state 3
+
+    num  go to state 121
+
+
+State 116
+
+   64 sequence: SEQ '(' startendind ')' .
+
+    $default  reduce using rule 64 (sequence)
+
+
+State 117
+
+   66 startendind: jumpsize id .
+
+    $default  reduce using rule 66 (startendind)
+
+
+State 118
+
+   52 for_loop: LOOP_FOR '(' cdn ')' NL '{' suite '}' .
+
+    $default  reduce using rule 52 (for_loop)
+
+
+State 119
+
+   45 if_loop: LOOP_IF '(' condition ')' NL '{' suite '}' .
+   46        | LOOP_IF '(' condition ')' NL '{' suite '}' . elseif_loop
+
+    LOOP_ELSE  shift, and go to state 122
+
+    NL        reduce using rule 45 (if_loop)
+    NL        [reduce using rule 50 (else_loop)]
+    $default  reduce using rule 45 (if_loop)
+
+    elseif_loop  go to state 123
+    else_loop    go to state 124
+
+
+State 120
+
+   67 startendind: num ',' num .
+   69 jumpsize: num ',' num . ',' FROM '=' num
+
+    ','  shift, and go to state 125
+
+    $default  reduce using rule 67 (startendind)
+
+
+State 121
+
+   68 startendind: num ':' num .
+
+    $default  reduce using rule 68 (startendind)
+
+
+State 122
+
+   47 elseif_loop: LOOP_ELSE . LOOP_IF '(' condition ')' '{' suite '}' elseif_loop
+   49 else_loop: LOOP_ELSE . '{' suite '}'
+
+    LOOP_IF  shift, and go to state 126
+    '{'      shift, and go to state 127
+
+
+State 123
+
+   46 if_loop: LOOP_IF '(' condition ')' NL '{' suite '}' elseif_loop .
+
+    $default  reduce using rule 46 (if_loop)
+
+
+State 124
+
+   48 elseif_loop: else_loop .
+
+    $default  reduce using rule 48 (elseif_loop)
+
+
+State 125
+
+   69 jumpsize: num ',' num ',' . FROM '=' num
+
+    FROM  shift, and go to state 128
+
+
+State 126
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF . '(' condition ')' '{' suite '}' elseif_loop
+
+    '('  shift, and go to state 129
+
+
+State 127
+
+   49 else_loop: LOOP_ELSE '{' . suite '}'
+
+    NL  shift, and go to state 73
+
+    suite  go to state 130
+
+
+State 128
+
+   69 jumpsize: num ',' num ',' FROM . '=' num
+
+    '='  shift, and go to state 131
+
+
+State 129
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' . condition ')' '{' suite '}' elseif_loop
+
+    ID   shift, and go to state 2
+    NUM  shift, and go to state 64
+
+    id                    go to state 65
+    condition             go to state 132
+    subcond1              go to state 67
+    subcond2              go to state 68
+    RelationalExpression  go to state 69
+
+
+State 130
+
+   49 else_loop: LOOP_ELSE '{' suite . '}'
+
+    '}'  shift, and go to state 133
+
+
+State 131
+
+   69 jumpsize: num ',' num ',' FROM '=' . num
+
+    NUM  shift, and go to state 3
+
+    num  go to state 134
+
+
+State 132
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition . ')' '{' suite '}' elseif_loop
+   56 condition: condition . '|' subcond1
+
+    ')'  shift, and go to state 135
+    '|'  shift, and go to state 85
+
+
+State 133
+
+   49 else_loop: LOOP_ELSE '{' suite '}' .
+
+    $default  reduce using rule 49 (else_loop)
+
+
+State 134
+
+   69 jumpsize: num ',' num ',' FROM '=' num .
+
+    $default  reduce using rule 69 (jumpsize)
+
+
+State 135
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition ')' . '{' suite '}' elseif_loop
+
+    '{'  shift, and go to state 136
+
+
+State 136
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition ')' '{' . suite '}' elseif_loop
+
+    NL  shift, and go to state 73
+
+    suite  go to state 137
+
+
+State 137
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition ')' '{' suite . '}' elseif_loop
+
+    '}'  shift, and go to state 138
+
+
+State 138
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition ')' '{' suite '}' . elseif_loop
+
+    LOOP_ELSE  shift, and go to state 122
+
+    $default  reduce using rule 50 (else_loop)
+
+    elseif_loop  go to state 139
+    else_loop    go to state 124
+
+
+State 139
+
+   47 elseif_loop: LOOP_ELSE LOOP_IF '(' condition ')' '{' suite '}' elseif_loop .
+
+    $default  reduce using rule 47 (elseif_loop)

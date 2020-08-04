@@ -1,0 +1,14 @@
+if(ast->left || ast->right)
+		printf("(");
+	printf("%s",ast->type);
+	if(ast->left)
+		displayast(ast->left);
+	if(ast->right)
+		displayast(ast->right);
+	if(ast->left||ast->right)
+		printf(")");
+	printf("\n");
+
+}
+
+
