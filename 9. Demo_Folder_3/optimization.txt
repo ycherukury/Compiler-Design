@@ -1,0 +1,252 @@
+
+
+----------------------------Before optimization!--------------------------------
+
+St.no		Operator  				Arg1      		Arg2    		Result  
+1			=         				2345      		        		abcezxc 		0       	
+
+2			=         				6789      		        		hithere 		0       	
+
+3			+         				2         		1       		t0      		0       	
+
+4			+         				3         		t0      		t1      		0       	
+
+5			+         				4         		t1      		t2      		0       	
+
+6			+         				5         		t2      		t3      		0       	
+
+7			=         				t3        		        		expression1		0       	
+
+8			=         				'abcdefg' 		        		dps     		0       	
+
+9			<-        				c(1,2,3...		        		defg    		0       	
+
+10			<-        				20        		        		defg[1] 		0       	
+
+11			=         				1         		        		i       		1       	
+
+12			Label     				          		        		For_0   		1       	
+
+13			<         				6         		i       		t4      		1       	
+
+14			not       				t4        		        		t5      		1       	
+
+15			if        				t5        		        		For_1   		1       	
+
+16			+         				1         		i       		t6      		1       	
+
+17			=         				t6        		        		i       		1       	
+
+18			+         				1         		expression1		t7      		1       	
+
+19			=         				t7        		        		expression1		1       	
+
+20			goto      				          		        		For_0   		1       	
+
+21			Label     				          		        		For_1   		1       	
+
+22			<-        				10        		        		testvar 		0       	
+
+23			Label     				          		        		While_0 		1       	
+
+24			>         				2         		testvar 		t8      		1       	
+
+25			not       				t8        		        		t9      		1       	
+
+26			if        				t9        		        		While_1 		1       	
+
+27			-         				1         		testvar 		t10     		1       	
+
+28			=         				t10       		        		testvar 		1       	
+
+29			goto      				          		        		While_0 		1       	
+
+30			Label     				          		        		While_1 		1       	
+
+31			<-        				1         		        		count   		0       	
+
+32			Label     				          		        		Repeat_0		1       	
+
+33			>         				3         		count   		t11     		1       	
+
+34			not       				t11       		        		t12     		1       	
+
+35			if        				t12       		        		Loop_1  		1       	
+
+36			goto      				          		        		Repeat_1		1       	
+
+37			goto      				          		        		Loop_2  		1       	
+
+38			Label     				          		        		Loop_1  		1       	
+
+39			+         				2         		count   		t13     		1       	
+
+40			<-        				t13       		        		count   		1       	
+
+41			Label     				          		        		Loop_2  		1       	
+
+42			goto      				          		        		Repeat_0		0       	
+
+43			Label     				          		        		Repeat_1		0       	
+
+44			<-        				5         		        		a       		0       	
+
+45			<         				8         		defg[1] 		t14     		1       	
+
+46			not       				t14       		        		t15     		1       	
+
+47			if        				t15       		        		Loop_3  		1       	
+
+48			goto      				          		        		Loop_4  		1       	
+
+49			Label     				          		        		Loop_3  		1       	
+
+50			Label     				          		        		Loop_4  		1       	
+
+51			<-        				5         		        		b       		0       	
+
+52			<         				8         		b       		t16     		1       	
+
+53			not       				t16       		        		t17     		1       	
+
+54			if        				t17       		        		Loop_5  		1       	
+
+55			goto      				          		        		Loop_6  		1       	
+
+56			Label     				          		        		Loop_5  		1       	
+
+57			Label     				          		        		Loop_6  		1       	
+
+58			<-        				5         		        		c       		0       	
+
+59			<         				8         		c       		t18     		1       	
+
+60			not       				t18       		        		t19     		1       	
+
+61			if        				t19       		        		Loop_7  		1       	
+
+62			goto      				          		        		Loop_8  		1       	
+
+63			Label     				          		        		Loop_7  		1       	
+
+64			Label     				          		        		Loop_8  		1       	
+
+length of quadruple: 64
+
+
+-----------------------------After optimization!--------------------------------
+
+St.no		Operator  				Arg1      		Arg2    		Result  
+7			=         				15        		        		expression1		0       	
+
+9			<-        				c(1,2,3...		        		defg    		0       	
+
+10			<-        				20        		        		defg[1] 		0       	
+
+11			=         				1         		        		i       		1       	
+
+12			Label     				          		        		For_0   		1       	
+
+13			<         				6         		i       		t4      		1       	
+
+14			not       				t4        		        		t5      		1       	
+
+15			if        				t5        		        		For_1   		1       	
+
+16			+         				1         		i       		t6      		1       	
+
+17			=         				t6        		        		i       		1       	
+
+18			+         				1         		expression1		t7      		1       	
+
+19			=         				t7        		        		expression1		1       	
+
+20			goto      				          		        		For_0   		1       	
+
+21			Label     				          		        		For_1   		1       	
+
+22			<-        				10        		        		testvar 		0       	
+
+23			Label     				          		        		While_0 		1       	
+
+24			>         				2         		testvar 		t8      		1       	
+
+25			not       				t8        		        		t9      		1       	
+
+26			if        				t9        		        		While_1 		1       	
+
+27			-         				1         		testvar 		t10     		1       	
+
+28			=         				t10       		        		testvar 		1       	
+
+29			goto      				          		        		While_0 		1       	
+
+30			Label     				          		        		While_1 		1       	
+
+31			<-        				1         		        		count   		0       	
+
+32			Label     				          		        		Repeat_0		1       	
+
+33			>         				3         		count   		t11     		1       	
+
+34			not       				t11       		        		t12     		1       	
+
+35			if        				t12       		        		Loop_1  		1       	
+
+36			goto      				          		        		Repeat_1		1       	
+
+37			goto      				          		        		Loop_2  		1       	
+
+38			Label     				          		        		Loop_1  		1       	
+
+39			+         				2         		count   		t13     		1       	
+
+40			<-        				t13       		        		count   		1       	
+
+41			Label     				          		        		Loop_2  		1       	
+
+42			goto      				          		        		Repeat_0		0       	
+
+43			Label     				          		        		Repeat_1		0       	
+
+45			<         				8         		defg[1] 		t14     		1       	
+
+46			not       				t14       		        		t15     		1       	
+
+47			if        				t15       		        		Loop_3  		1       	
+
+48			goto      				          		        		Loop_4  		1       	
+
+49			Label     				          		        		Loop_3  		1       	
+
+50			Label     				          		        		Loop_4  		1       	
+
+51			<-        				5         		        		b       		0       	
+
+52			<         				8         		b       		t16     		1       	
+
+53			not       				t16       		        		t17     		1       	
+
+54			if        				t17       		        		Loop_5  		1       	
+
+55			goto      				          		        		Loop_6  		1       	
+
+56			Label     				          		        		Loop_5  		1       	
+
+57			Label     				          		        		Loop_6  		1       	
+
+58			<-        				5         		        		c       		0       	
+
+59			<         				8         		c       		t18     		1       	
+
+60			not       				t18       		        		t19     		1       	
+
+61			if        				t19       		        		Loop_7  		1       	
+
+62			goto      				          		        		Loop_8  		1       	
+
+63			Label     				          		        		Loop_7  		1       	
+
+64			Label     				          		        		Loop_8  		1       	
+
+length of quadruple: 56

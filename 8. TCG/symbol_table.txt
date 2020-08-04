@@ -1,0 +1,22 @@
+---------------			------------			------			------			------
+Identifier Name			Line Numbers			 Scope			 Type 			 Value
+---------------			------------			------			------			------
+abcezxc              	  12 					   1 			int				2345       
+                     
+hithere              	  13 					   1 			int				6789       
+                     
+expression1          	  14 					   1 			int				15         
+                     	  25 					   2 			int				1          
+                     
+dps                  	  16 					   1 			string			'abcdefg'  
+                     
+defg                 	  19 					   1 			vector			(1, 2, 3, 4, 5, 6, 'abcdefg', 'how', ) 
+                     
+testvar              	  29 					   1 			int				10         
+                     	  33 					   2 			int				-1         
+                     
+count                	  37 					   1 			int				1          
+                     	  43 					   3 			int				2          
+                     
+a                    	  48 					   1 			int				5          
+                     

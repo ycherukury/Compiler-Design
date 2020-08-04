@@ -1,0 +1,64 @@
+abcezxc = 2345
+hithere = 6789
+t0 = 1 + 2
+t1 = t0 + 3
+t2 = t1 + 4
+t3 = t2 + 5
+expression1 = t3
+dps = 'abcdefg'
+defg <- c(1,2,3,4,5,6,'abcdefg','how')
+defg[1] <- 20
+i = 1
+For_0: 
+t4 = i < 6
+t5 = not t4
+if t5 goto For_1
+t6 = i + 1
+i = t6
+t7 = expression1 + 1
+expression1 = t7
+goto For_0 
+For_1: 
+testvar <- 10
+While_0: 
+t8 = testvar > 2
+t9 = not t8
+if t9 goto While_1
+t10 = testvar - 1
+testvar = t10
+goto While_0 
+While_1: 
+count <- 1
+Repeat_0: 
+t11 = count > 3
+t12 = not t11
+if t12 goto Loop_1
+goto Repeat_1: 
+goto Loop_2
+Loop_1: 
+t13 = count + 2
+count <- t13
+Loop_2: 
+goto Repeat_0
+Repeat_1: 
+a <- 5
+t14 = defg[1] < 8
+t15 = not t14
+if t15 goto Loop_3
+goto Loop_4
+Loop_3: 
+Loop_4: 
+b <- 5
+t16 = b < 8
+t17 = not t16
+if t17 goto Loop_5
+goto Loop_6
+Loop_5: 
+Loop_6: 
+c <- 5
+t18 = c < 8
+t19 = not t18
+if t19 goto Loop_7
+goto Loop_8
+Loop_7: 
+Loop_8: 
